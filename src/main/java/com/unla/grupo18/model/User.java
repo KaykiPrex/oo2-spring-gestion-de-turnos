@@ -3,6 +3,7 @@ package com.unla.grupo18.model;
 import jakarta.persistence.*;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "user")
 public class User {
     @Id
