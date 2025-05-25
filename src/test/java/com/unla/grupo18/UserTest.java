@@ -22,7 +22,7 @@ public class UserTest {
 
         User usuario = new User();
         usuario.setName("pepito3");
-        usuario.setPass("claveSegura3");
+        usuario.setPassword("claveSegura3");
         usuario.setContact(contact);
 
         contact.setUser(usuario);

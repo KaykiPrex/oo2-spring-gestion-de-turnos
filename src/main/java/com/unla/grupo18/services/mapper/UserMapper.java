@@ -15,7 +15,7 @@ public class UserMapper {
 
         User user = new User();
         user.setName(request.name());
-        user.setPass(request.pass());
+        user.setPassword(request.pass());
         contact.setUser(user);
         user.setContact(contact);
 
@@ -23,7 +23,7 @@ public class UserMapper {
     }
 
     public static CreateUserResponse toResponse(User user) {
-        return new CreateUserResponse(user.getId(), user.getName(), user.getPass(), ContactMapper.toResponse(user.getContact()));
+        return new CreateUserResponse(user.getId(), user.getUsername(), user.getPassword(), ContactMapper.toResponse(user.getContact()));
     }
 
 }

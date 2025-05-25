@@ -1,32 +1,44 @@
 package com.unla.grupo18.model;
 
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "user")
-public class User {
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String name;
-    private String pass;
+    private String username;
+    private String password;
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Contact contact;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
 
     public User() {
     }
 
-    public User(Contact contact, String pass, String name, int id) {
+    public User(Contact contact, String password, String username, int id) {
         this.contact = contact;
-        this.pass = pass;
-        this.name = name;
+        this.password = password;
+        this.username = username;
         this.id = id;
     }
 
-    public User(String name, String pass, Contact contact) {
-        this.name = name;
-        this.pass = pass;
+    public User(String username, String password, Contact contact) {
+        this.username = username;
+        this.password = password;
         this.contact = contact;
     }
 
@@ -38,20 +50,12 @@ public class User {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public void setName(String username) {
+        this.username = username;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPass() {
-        return pass;
-    }
-
-    public void setPass(String pass) {
-        this.pass = pass;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public Contact getContact() {
@@ -60,5 +64,33 @@ public class User {
 
     public void setContact(Contact contact) {
         this.contact = contact;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).toList();
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }
