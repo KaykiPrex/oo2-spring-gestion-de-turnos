@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/users/professionals")
 @PreAuthorize("hasAuthority('professional')")
 public class UserProfessionalController {
-    @GetMapping("/dashboard")
+    @GetMapping("/home")
     public String getDashboard() {
         return "Bienvenido al área de Profesional";
     }
