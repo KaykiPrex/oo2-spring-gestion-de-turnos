@@ -2,32 +2,16 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Title</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
 </head>
 <body>
+<form th:action="@{/logout}" method="post">
+    <button type="submit">Logout</button>
+</form>
 <h2>Bienvenido Usuario</h2>
 <p>Has accedido con el rol de usuario professional.</p>
-<h1>Lista de Citas</h1>
-<table border="1">
-  <thead>
-  <tr>
-    <th>ID</th>
-    <th>Fecha</th>
-    <th>Hora</th>
-    <th>Cliente</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr th:each="appointment : ${appointments}">
-    <td th:text="${appointment.id}"></td>
-    <td th:text="${appointment.date}"></td>
-    <td th:text="${appointment.time}"></td>
-    <td th:text="${appointment.client != null ? appointment.client.name : ''}"></td>
-  </tr>
-  </tbody>
-</table>
-
-
+<p>Tu ID de usuario es: <span th:text="${userId}"></span></p>
+<button th:onclick="|window.location.href='/users/professionals/appointments/${userId}'|">Mi agenda</button>
 </body>
 </html>
