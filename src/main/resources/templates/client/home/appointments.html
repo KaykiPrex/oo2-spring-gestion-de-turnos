@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Mis Turnos</h1>
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Fecha</th>
+        <th>Hora</th>
+        <th>Profesional</th>
+        <th>Cliente</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="appointment : ${appointments}">
+        <td th:text="${appointment.id}"></td>
+        <td th:text="${appointment.date}"></td>
+        <td th:text="${appointment.time}"></td>
+        <td th:text="${appointment.professional.name}"></td>
+        <td th:text="${appointment.client.name}"></td>
+    </tr>
+    </tbody>
+</table>
+<button onclick="window.history.back()">Volver Atrás</button>
+</body>
+</html>
