@@ -9,7 +9,6 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -39,7 +38,17 @@ public class SecurityConfig {
                         .defaultSuccessUrl("/login-success", true)
                         .permitAll()
                 )
-                .logout(LogoutConfigurer::permitAll);
+                .sessionManagement(session -> session
+                        .sessionFixation().newSession())
+                .logout(logout -> {
+                    logout
+                            .logoutUrl("/logout")
+                            .logoutSuccessUrl("/login")
+                            .invalidateHttpSession(true)
+                            .permitAll();
+                });
+
+
 
         return http.build();
     }
