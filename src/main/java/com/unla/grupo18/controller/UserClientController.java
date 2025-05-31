@@ -2,6 +2,7 @@ package com.unla.grupo18.controller;
 
 import com.unla.grupo18.model.Appointment;
 import com.unla.grupo18.services.AppointmentService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,9 +22,16 @@ public class UserClientController {
     }
 
     @GetMapping("/home")
-    public String getDashboard(Model model) {
+    public String getDashboard(HttpSession session, Model model) {
+        Integer userId = (Integer) session.getAttribute("userId");
+        model.addAttribute("userId", userId);
+        return "client/home";
+    }
+
+    @GetMapping("/appointments")
+    public String getAppoitments(Model model) {
         List<Appointment> appointments = appointmentService.getAppointmentsByClient(1);
         model.addAttribute("appointments", appointments);
-        return "client/home";
+        return "client/home/appointments";
     }
 }
