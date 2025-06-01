@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Mis Especialidades</h1>
+<table border="1">
+    <thead>
+    <tr>
+        <th>especialidad</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="speciality : ${category.specialties}">
+        <td th:text="${speciality.name}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

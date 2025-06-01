@@ -20,6 +20,8 @@ public class Specialty {
     @JoinColumn(name = "category_id")
     private Category category;
 
+    public Specialty() {
+    }
 
     public Specialty(String name, String description) {
         this.name = name;
