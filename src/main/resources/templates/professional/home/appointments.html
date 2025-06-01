@@ -14,6 +14,7 @@
         <th>Fecha</th>
         <th>Hora</th>
         <th>Cliente</th>
+        <th>Servicio</th>
     </tr>
     </thead>
     <tbody>
@@ -22,6 +23,7 @@
         <td th:text="${appointment.date}"></td>
         <td th:text="${appointment.time}"></td>
         <td th:text="${appointment.client != null ? appointment.client.name : ''}"></td>
+        <td th:text="${appointment.professionalService != null && appointment.professionalService.service != null ? appointment.professionalService.service.name : 'N/A'}"></td>
     </tr>
     </tbody>
 </table>

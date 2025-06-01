@@ -21,8 +21,8 @@ public class Appointment {
     @JoinColumn(name = "client_id")
     private Client client;
     @ManyToOne
-    @JoinColumn(name = "service_id")
-    private Service service;
+    @JoinColumn(name = "professional_service_id")
+    private ProfessionalService professionalService;
     @OneToOne(mappedBy = "appointment", cascade = CascadeType.ALL)
     private Report report;
 
@@ -85,12 +85,12 @@ public class Appointment {
         this.client = client;
     }
 
-    public Service getService() {
-        return service;
+    public ProfessionalService getProfessionalService() {
+        return professionalService;
     }
 
-    public void setService(Service service) {
-        this.service = service;
+    public void setProfessionalService(ProfessionalService professionalService) {
+        this.professionalService = professionalService;
     }
 
     public Report getReport() {

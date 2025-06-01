@@ -3,6 +3,7 @@ package com.unla.grupo18.model;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table(name = "professional_service")
@@ -17,6 +18,8 @@ public class ProfessionalService {
     @ManyToOne
     @JoinColumn(name = "service_id")
     private Service service;
+    @OneToMany(mappedBy = "professionalService")
+    private List<Appointment> appointments;
 
     public ProfessionalService() {
     }
@@ -56,5 +59,13 @@ public class ProfessionalService {
 
     public void setService(Service service) {
         this.service = service;
+    }
+
+    public List<Appointment> getAppointments() {
+        return appointments;
+    }
+
+    public void setAppointments(List<Appointment> appointments) {
+        this.appointments = appointments;
     }
 }

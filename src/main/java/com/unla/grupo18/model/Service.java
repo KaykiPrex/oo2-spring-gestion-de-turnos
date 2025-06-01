@@ -19,6 +19,8 @@ public class Service {
     @JoinColumn(name = "specialty_id")
     private Specialty specialty;
 
+    public Service() {
+    }
 
     public Service(String name, String description, String duration ) {
         this.name = name;
