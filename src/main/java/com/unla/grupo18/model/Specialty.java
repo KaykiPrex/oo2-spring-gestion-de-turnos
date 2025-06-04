@@ -15,7 +15,7 @@ public class Specialty {
     @OneToMany(mappedBy = "specialty")
     private List<ProfessionalSpecialty> professionalSpecialties;
     @OneToMany(mappedBy = "specialty")
-    private List<Service> service;
+    private List<Service> services;
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
@@ -60,12 +60,12 @@ public class Specialty {
         this.professionalSpecialties = professionalSpecialties;
     }
 
-    public List<Service> getService() {
-        return service;
+    public List<Service> getServices() {
+        return services;
     }
 
-    public void setService(List<Service> service) {
-        this.service = service;
+    public void setServices(List<Service> services) {
+        this.services = services;
     }
 
     public Category getCategory() {
