@@ -18,6 +18,7 @@ public class Professional extends User{
     @Column(name = "work_days")
     private String workDays;
     //private List<DayOfWeek> workDays;
+    //Que solo exista en ProfesionaService y aca se elimina
     @OneToMany(mappedBy = "professional", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Appointment> appointments;
     @ManyToMany
