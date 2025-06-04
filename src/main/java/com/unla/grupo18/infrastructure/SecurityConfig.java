@@ -31,6 +31,7 @@ public class SecurityConfig {
                         .requestMatchers("/users/professionals/**").hasAuthority("professional")
                         .requestMatchers("/home").permitAll()
                         .requestMatchers("/login").permitAll()
+                        .requestMatchers("/css/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
