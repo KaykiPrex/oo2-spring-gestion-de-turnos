@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Profesionales disponibles</h1>
+<table border="1">
+  <thead>
+  <tr>
+    <th>profesional</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="professionalService : ${service.professionalServices}">
+    <td> <a th:href="@{/professionalservices/{id}(id=${professionalService.id})}" th:text="${professionalService.professional.name}"></a> </td>
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>
