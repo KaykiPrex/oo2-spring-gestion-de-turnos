@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/appointment.css}">
 </head>
 <body>
 <h1>Mis Turnos</h1>
@@ -14,7 +15,7 @@
         <th>Fecha</th>
         <th>Hora</th>
         <th>Profesional</th>
-        <th>Cliente</th>
+
     </tr>
     </thead>
     <tbody>
@@ -23,7 +24,7 @@
         <td th:text="${appointment.date}"></td>
         <td th:text="${appointment.time}"></td>
         <td th:text="${appointment.professional.name}"></td>
-        <td th:text="${appointment.client.name}"></td>
+
     </tr>
     </tbody>
 </table>
