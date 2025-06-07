@@ -1,7 +1,7 @@
 package com.unla.grupo18.model;
 
 import jakarta.persistence.*;
-
+import com.unla.grupo18.model.User;
 import java.util.List;
 
 @Entity
@@ -24,6 +24,12 @@ public class Client extends User{
         this.appointments = appointments;
     }
 
+    public Client(String username, String password, String name, String lastName, String dni){
+        super(username, password, null);
+        this.name=name;
+        this.lastName= lastName;
+        this.dni= dni;
+    }
     public Client(String userName, String userPass, Contact contact, String name, String lastName, String dni, List<Appointment> appointments) {
         super(userName, userPass, contact);
         this.name = name;
@@ -51,6 +57,8 @@ public class Client extends User{
     public String getDni() {
         return dni;
     }
+
+    public int getUserId(){return super.getId();}
 
     public void setDni(String dni) {
         this.dni = dni;
