@@ -4,6 +4,8 @@ import com.unla.grupo18.model.Appointment;
 import com.unla.grupo18.services.AppointmentService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +29,11 @@ public class UserProfessionalController {
         Integer userId = (Integer) session.getAttribute("userId");
 
         model.addAttribute("userId", userId);
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        model.addAttribute("username", username);
         return "professional/home";
     }
 

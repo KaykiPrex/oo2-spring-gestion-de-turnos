@@ -23,6 +23,9 @@ public class ProfessionalService {
 
     public ProfessionalService() {
     }
+    public ProfessionalService(List<Appointment> appointments) {
+        this.appointments = appointments;
+    }
 
     public ProfessionalService(int id, BigDecimal price) {
         this.id = id;
