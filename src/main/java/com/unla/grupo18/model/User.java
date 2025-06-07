@@ -79,6 +79,12 @@ public class User implements UserDetails {
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).toList();
     }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
+    public void setRole(Role role) {
+        this.roles.add(role);
+    }
     @Override
     public String getPassword() {
         return password;

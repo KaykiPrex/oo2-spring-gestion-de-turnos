@@ -3,6 +3,7 @@ package com.unla.grupo18.infrastructure;
 import com.unla.grupo18.services.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -25,13 +26,17 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
+
+        http .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/users/clients/**").hasAuthority("client")
                         .requestMatchers("/users/professionals/**").hasAuthority("professional")
                         .requestMatchers("/home").permitAll()
                         .requestMatchers("/login").permitAll()
+                        .requestMatchers("/register").permitAll()
                         .requestMatchers("/css/**").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/appointments/**").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/calendar/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
