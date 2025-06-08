@@ -5,6 +5,7 @@ import com.unla.grupo18.repositories.IUserRepository;
 import com.unla.grupo18.services.mapper.UserMapper;
 import com.unla.grupo18.services.request.CreateUserRequest;
 import com.unla.grupo18.services.response.CreateUserResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,6 +21,7 @@ public class UserService implements IUserService{
         User user = repository.save(UserMapper.toModel(request));
         return UserMapper.toResponse(user);
     }
+
 
     @Override
     public User update(User user) {

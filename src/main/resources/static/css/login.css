@@ -76,3 +76,13 @@ button:hover {
     background: #896868;
     transform: scale(1.05);
 }
+#buttonBack{
+    background: #b88b8b;
+    width:50px;
+    height: 50px;
+    font-size:25px;
+    color:white;
+    display: flex;
+    align-items:center;
+justify-content: center;
+}

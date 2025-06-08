@@ -1,17 +1,29 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/index.css}">
 </head>
+
 <body>
-<form th:action="@{/logout}" method="post">
-    <button type="submit">Logout</button>
-</form>
-<h2>Bienvenido Usuario</h2>
-<p>Has accedido con el rol de usuario client.</p>
-<button onclick="window.location.href='/users/clients/appointments'">Mis turnos</button>
-<button onclick="window.location.href='/users/clients/categories'">Mis Categorias</button>
+<header class="main-header">
+    <div class="company-name"><h2 class="nombre-empresa">Grupo 18</h2></div>
+    <nav>
+        <form th:action="@{/logout}" method="post">
+            <button type="submit">Cerrar sesion</button>
+        </form>
+
+        <p>Bienvenido, <span th:text="${username}"></span></p>
+
+    </nav>
+</header>
+<div class="contenedor">
+    <div class="opciones">
+        <div th:onclick="|window.location.href='/users/clients/appointments'|" class="opcion celeste">Mi agenda</div>
+        <div th:onclick="|window.location.href='/users/clients/categories'|" class="opcion amarillo">Solicitar turno</div>
+    </div>
+
+</div>
 </body>
 </html>

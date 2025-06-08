@@ -16,6 +16,7 @@
         <th>Hora</th>
         <th>Cliente</th>
         <th>Servicio</th>
+        <th> </th>
     </tr>
     </thead>
     <tbody>
@@ -25,9 +26,38 @@
         <td th:text="${appointment.time}"></td>
         <td th:text="${appointment.client != null ? appointment.client.name : ''}"></td>
         <td th:text="${appointment.professionalService != null && appointment.professionalService.service != null ? appointment.professionalService.service.name : 'N/A'}"></td>
+
+        <td th:if="${appointment.client !=null}">
+            <button th:attr="onclick='cancelarTurno(' + ${appointment.id} + ')'">
+              Cancelar turno
+            </button>
+
+        </td>
+
     </tr>
     </tbody>
 </table>
 <button onclick="window.history.back()">Volver Atrás</button>
 </body>
 </html>
+<script>
+    function cancelarTurno(id) {
+        if (confirm("¿Estás seguro que deseas cancelar el turno?")) {
+            fetch('/appointments/' + id + '/cancelar-turno', {
+                method: 'PUT',
+                 headers: {
+            'Content-Type': 'application/json'
+             }
+        })
+            .then(response => {
+                if (response.ok) {
+                    alert("Turno cancelado correctamente");
+                    location.reload();
+                } else {
+                    alert("Error al cancelar el turno");
+                }
+            })
+            .catch(error => console.error("Error:", error));
+        }
+    }
+</script>
