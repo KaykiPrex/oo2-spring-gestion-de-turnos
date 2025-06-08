@@ -4,20 +4,22 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/default-table.css}">
 </head>
 <body>
-<h1>Mis Categorias</h1>
+<h1>Categorias disponibles</h1>
 <table border="1">
-  <thead>
-  <tr>
-    <th>categoria</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr th:each="category : ${categories}">
-    <td> <a th:href="@{/categories/{id}(id=${category.id})}" th:text="${category.name}"></a> </td>
-  </tr>
-  </tbody>
+    <thead>
+    <tr>
+        <th>categoria</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="category : ${categories}">
+        <td><a th:href="@{/categories/{id}(id=${category.id})}" th:text="${category.name}"></a></td>
+    </tr>
+    </tbody>
 </table>
+<button onclick="window.history.back()">Volver Atrás</button>
 </body>
 </html>

@@ -14,17 +14,15 @@
 <header class="main-header">
     <div class="company-name"><h2 class="nombre-empresa">Grupo 18</h2></div>
     <nav>
+        <p><span th:text="${username}" style="font-size: 24px;padding-right: 20px;"></span></p>
         <form th:action="@{/logout}" method="post">
             <button type="submit">Cerrar sesion</button>
         </form>
-
-        <p>Bienvenido, <span th:text="${username}"></span></p>
-
     </nav>
 </header>
 <div class="contenedor">
     <div class="opciones">
-        <div th:onclick="|window.location.href='/users/clients/appointments'|" class="opcion celeste">Mi agenda</div>
+        <div th:onclick="|window.location.href='/users/clients/appointments'|" class="opcion celeste">Mis turnos</div>
         <div th:onclick="|window.location.href='/users/clients/categories'|" class="opcion amarillo">Solicitar turno</div>
     </div>
 

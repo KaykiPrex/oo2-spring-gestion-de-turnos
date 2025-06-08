@@ -2,33 +2,28 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" th:href="@{/css/appointment.css}">
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" th:href="@{/css/default-table.css}">
 </head>
 <body>
 <h1>Horarios disponibles</h1>
 <table border="1">
   <thead>
   <tr>
-    <th>ID</th>
     <th>Fecha</th>
     <th>Hora</th>
     <th>Profesional</th>
-    <th>Cliente</th>
-    <th>Pedir turno</th>
   </tr>
   </thead>
   <tbody>
   <tr th:each="appointment : ${professionalService.appointments}" th:if="${appointment.client == null}">
-    <td th:text="${appointment.id}"></td>
     <td th:text="${appointment.date}"></td>
     <td th:text="${appointment.time}"></td>
     <td th:text="${appointment.professional.name}"></td>
-    <td th:text="${appointment.client != null ? appointment.client.name : ''}"></td>
     <td>
       <button th:attr="onclick='pedirTurno(' + ${appointment.id} + ')'">
-      Pedir turno
+      Solicitar turno
       </button>
     </td>
   </tr>
