@@ -100,4 +100,9 @@ public class Appointment {
     public void setReport(Report report) {
         this.report = report;
     }
+
+    public void deleteClient() {
+        setClient(null);
+        setBlocked(false);
+    }
 }

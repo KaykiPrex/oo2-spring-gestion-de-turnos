@@ -15,7 +15,7 @@
         <th>Fecha</th>
         <th>Hora</th>
         <th>Profesional</th>
-
+        <th>Cliente</th>
     </tr>
     </thead>
     <tbody>
@@ -24,7 +24,12 @@
         <td th:text="${appointment.date}"></td>
         <td th:text="${appointment.time}"></td>
         <td th:text="${appointment.professional.name}"></td>
-
+        <td th:text="${appointment.client.id}"></td>
+        <td>
+            <form th:action="@{/appointments/{id}/clients/{clientid}(id=${appointment.id}, clientid=${appointment.client.id})}" method="post">
+                <button type="submit">Cancelar</button>
+            </form>
+        </td>
     </tr>
     </tbody>
 </table>

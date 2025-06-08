@@ -1,11 +1,15 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
+    <title>Title</title>
+    <script th:if="${mensaje}">
+        alert("[[${mensaje}]]");
+    </script>
     <title>Dashboard</title>
     <link rel="stylesheet" th:href="@{/css/index.css}">
 </head>
-
 <body>
 <header class="main-header">
     <div class="company-name"><h2 class="nombre-empresa">Grupo 18</h2></div>

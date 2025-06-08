@@ -1,7 +1,6 @@
 package com.unla.grupo18.controller;
 
 import com.unla.grupo18.model.ProfessionalService;
-import com.unla.grupo18.model.Service;
 import com.unla.grupo18.services.ProfessionalServiceService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

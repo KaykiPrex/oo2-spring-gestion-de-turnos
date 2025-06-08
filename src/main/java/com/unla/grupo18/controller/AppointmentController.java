@@ -1,40 +1,37 @@
 package com.unla.grupo18.controller;
 
-import com.unla.grupo18.repositories.IAppointmentRepository;
+import com.unla.grupo18.infrastructure.notification.MailSender;
 import com.unla.grupo18.model.Appointment;
-import java.util.Optional;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.unla.grupo18.services.AppointmentService;
+import jakarta.mail.MessagingException;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.Optional;
+import java.io.UnsupportedEncodingException;
 
-@CrossOrigin(origins = "*")
-
-@RestController
+@Controller
 @RequestMapping("/appointments")
 public class AppointmentController {
+    private final AppointmentService service;
+    private final MailSender mailSender;
 
-    @Autowired
-    private IAppointmentRepository appointmentRepository;
-
-    @PutMapping("/{id}/cancelar-turno")
-    public <Appointment> ResponseEntity<?> removeClient(@PathVariable Integer id) {
-        Optional<com.unla.grupo18.model.Appointment> optionalAppointment = appointmentRepository.findById(id);
-
-
-        if (optionalAppointment.isPresent()) {
-            com.unla.grupo18.model.Appointment appointment = optionalAppointment.get();
-
-            appointment.setClient(null);
-            appointmentRepository.save(appointment);
-            return ResponseEntity.ok().body("Turno cancelada");
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("El turno no existe.");
-        }
-
+    public AppointmentController(AppointmentService service, MailSender mailSender) {
+        this.service = service;
+        this.mailSender = mailSender;
     }
 
-
+    @PostMapping("{id}/clients/{clientid}")
+    public String deleteClient(@PathVariable int id, @PathVariable int clientid, RedirectAttributes redirectAttributes) throws MessagingException, UnsupportedEncodingException {
+        Appointment appointment = service.getAppointmentsById(id) ;
+        String clientDisplayName = appointment.getClient().getName() + " " +appointment.getClient().getLastName();
+        appointment.deleteClient();
+        service.updateAppointment(appointment);
+        String to = System.getenv("SENDER_MAIL_TEST");// ONLY FOR TEST //appointment.getProfessional().getContact().getWorkEmail();
+        mailSender.send(to,"Turno cancelado","Buen día : El cliente " +clientDisplayName+ " ha cancelado el turno");
+        redirectAttributes.addFlashAttribute("mensaje", "Se canceló el turno correctamente.");
+        return "redirect:/users/clients/home";
+    }
 }

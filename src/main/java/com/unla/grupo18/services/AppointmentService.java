@@ -21,4 +21,12 @@ public class AppointmentService {
         return appointmentRepository.findByClientId(clientId);
     }
 
+    public Appointment  getAppointmentsById(int id) {
+        return appointmentRepository.findById(id).orElseThrow();
+    }
+
+    public void updateAppointment(Appointment appointment) {
+        appointmentRepository.save(appointment);
+    }
+
 }
