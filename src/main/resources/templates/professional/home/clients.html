@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/default-table.css}">
+</head>
+<body>
+<h1>Cartera de clientes</h1>
+<table border="1">
+    <thead>
+    <tr>
+        <th>Nombre</th>
+        <th>Apellido</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="client : ${clients}">
+        <td th:text="${client.name!= null ? client.name : ''}"></td>
+        <td th:text="${client.lastName!= null ? client.lastName : ''}"></td>
+    </tr>
+    </tbody>
+</table>
+<button onclick="window.history.back()">Volver Atrás</button>
+</body>
+</html>

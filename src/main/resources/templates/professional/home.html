@@ -20,10 +20,9 @@
 </header>
 <div class="contenedor">
     <div class="opciones">
-        <div onclick="location.href='ruta de turnos'" class="opcion rojo">Turnos diarios</div>
+        <div th:onclick="|window.location.href='/users/professionals/appointments/${userId}/today'|" class="opcion rojo">Turnos de día</div>
         <div th:onclick="|window.location.href='/users/professionals/appointments/${userId}'|" class="opcion celeste">Mi agenda</div>
-        <div onclick="location.href='ruta de clientes'" class="opcion amarillo">Mis clientes</div>
-        <div onclick="location.href='ruta de especialidades'" class="opcion oscuro">Mis especialidades</div>
+        <div th:onclick="|window.location.href='/users/professionals/${userId}/clients'|" class="opcion amarillo">Mis clientes</div>
     </div>
 
 </div>
