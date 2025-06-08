@@ -20,7 +20,7 @@ public class User implements UserDetails {
     private String password;
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Contact contact;
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
