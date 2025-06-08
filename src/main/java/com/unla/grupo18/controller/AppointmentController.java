@@ -7,9 +7,9 @@ import jakarta.mail.MessagingException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import java.io.UnsupportedEncodingException;
 
 @Controller
@@ -34,4 +34,16 @@ public class AppointmentController {
         redirectAttributes.addFlashAttribute("mensaje", "Se canceló el turno correctamente.");
         return "redirect:/users/clients/home";
     }
+    @PutMapping("/{id}/cancelar-turno")
+    public String removeClientForProfessional(@PathVariable Integer id,RedirectAttributes redirectAttributes ) throws MessagingException, UnsupportedEncodingException {
+        Appointment appointment = service.getAppointmentsById(id);
+        String professionalDisplayName = appointment.getProfessional().getName() + " " +appointment.getProfessional().getLastName();
+        appointment.deleteClient();
+        service.updateAppointment(appointment);
+        String to = System.getenv("SENDER_MAIL_TEST");// ONLY FOR TEST //appointment.getClient().getContact().getWorkEmail();
+        mailSender.send(to,"Turno cancelado","Buen día : El profesional " +professionalDisplayName+ " ha cancelado el turno");
+        redirectAttributes.addFlashAttribute("mensaje", "Se canceló el turno correctamente.");
+        return "redirect:/users/professional/home";
+    }
+
 }
