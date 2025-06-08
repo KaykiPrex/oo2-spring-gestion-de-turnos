@@ -2,15 +2,13 @@ package com.unla.grupo18.model;
 
 import jakarta.persistence.*;
 
-import java.math.BigDecimal;
-
 @Entity
 @Table(name = "professional_specialty")
 public class ProfessionalSpecialty {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private BigDecimal status;
+    private String status;
     @ManyToOne
     @JoinColumn(name = "professional_id")
     private Professional professional;
@@ -34,12 +32,12 @@ public class ProfessionalSpecialty {
         this.id = id;
     }
 
-    public BigDecimal getPrice() {
+    public String getStatus() {
         return status;
     }
 
-    public void setPrice(BigDecimal price) {
-        this.status = price;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public Professional getProfessional() {
