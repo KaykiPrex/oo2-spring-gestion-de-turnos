@@ -15,7 +15,7 @@ public interface IAppointmentRepository extends JpaRepository<Appointment, Integ
     List<Appointment> findByProfessionalId(int professionalId);
     List<Appointment> findByClientId(int clientId);
     List<Appointment> findBydate(LocalDate date);
-    @Query("SELECT DISTINCT a.client FROM Appointment a WHERE a.professional.id = :professionalId")
+    @Query("SELECT DISTINCT a.client FROM Appointment a WHERE a.professional.id = :professionalId AND a.client IS NOT NULL")
     List<Client> findDistinctClientsByProfessional(@Param("professionalId") int professionalId);
 
 }
