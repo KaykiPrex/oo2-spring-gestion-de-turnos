@@ -36,7 +36,7 @@
 <script>
     document.getElementById('registerForm').addEventListener('submit', function(e) {
         e.preventDefault();
-        fetch('/register', {
+        fetch('/auth/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

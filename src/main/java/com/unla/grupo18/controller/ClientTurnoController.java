@@ -27,11 +27,10 @@ public class ClientTurnoController {
     private IAppointmentRepository appointmentRepository;
     @PutMapping("/{id}/pedir-turno")
     public ResponseEntity<?> assignClientToAppointment(@PathVariable Integer id) {
-        // Obtener el cliente autenticado
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Client client = (Client) authentication.getPrincipal();
 
-        System.out.println("clietne: " + client);
         Optional<Appointment> optionalAppointment = appointmentRepository.findById(id);
         if (optionalAppointment.isPresent()) {
             com.unla.grupo18.model.Appointment appointment = optionalAppointment.get();

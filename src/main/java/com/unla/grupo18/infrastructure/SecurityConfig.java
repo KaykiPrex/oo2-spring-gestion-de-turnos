@@ -33,7 +33,7 @@ public class SecurityConfig {
                         .requestMatchers("/users/professionals/**").hasAuthority("professional")
                         .requestMatchers("/home").permitAll()
                         .requestMatchers("/login").permitAll()
-                        .requestMatchers("/register").permitAll()
+                        .requestMatchers("/auth/register").permitAll()
                         .requestMatchers("/css/**").permitAll()
                         .requestMatchers("/js/**").permitAll()
                         .requestMatchers(HttpMethod.PUT, "/appointments/**").permitAll()
