@@ -5,6 +5,8 @@ import com.unla.grupo18.model.Appointment;
 import com.unla.grupo18.model.ProfessionalService;
 
 import com.unla.grupo18.services.ProfessionalServiceService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,20 +20,20 @@ import java.util.List;
 
 
 import java.util.Optional;
-
+@Tag(name= "Controlador turno", description = "Controlador para sacar turno en cliente")
 @RestController
 @RequestMapping("/calendar")
 public class ClientTurnoController {
 
     @Autowired
     private IAppointmentRepository appointmentRepository;
+    @Operation(summary = "Pedir turno", description = "Funcion para que el cliente pida un turno en especifico")
     @PutMapping("/{id}/pedir-turno")
     public ResponseEntity<?> assignClientToAppointment(@PathVariable Integer id) {
-        // Obtener el cliente autenticado
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Client client = (Client) authentication.getPrincipal();
 
-        System.out.println("clietne: " + client);
+        System.out.println("cliente: " + client);
         Optional<Appointment> optionalAppointment = appointmentRepository.findById(id);
         if (optionalAppointment.isPresent()) {
             com.unla.grupo18.model.Appointment appointment = optionalAppointment.get();

@@ -1,41 +1,51 @@
 package com.unla.grupo18.controller;
-import com.unla.grupo18.services.UserService;
+
 
 import com.unla.grupo18.model.Client;
 import com.unla.grupo18.model.Role;
 import com.unla.grupo18.repositories.IClientRepository;
 import com.unla.grupo18.repositories.IRoleRepository;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
+import org.springframework.web.servlet.ModelAndView;
 import java.util.Map;
 
-@Controller
-public class RegisterController{
-    @Autowired
+
+@Tag(name = "Controlador de registro", description = "Todo lo relacionado con el registro de nuevo usuario")
+
+@RestController
+@RequestMapping("/auth")
+public class RegisterController {
+
     private final IClientRepository clientRepository;
-    @Autowired
     private final IRoleRepository roleRepository;
 
-
+    @Autowired
     public RegisterController(IClientRepository clientRepository, IRoleRepository roleRepository) {
         this.clientRepository = clientRepository;
         this.roleRepository = roleRepository;
-
     }
+    @Operation(summary = "Mostrar página de registro", description = "Devuelve la vista de registro")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Vista de registro cargada correctamente")
+    })
 
     @GetMapping("/register")
-    public String showRegisterPage() {
-        return "register";
+    public ModelAndView showRegisterPage() {
+        return new ModelAndView("register");
     }
+
+    @Operation(summary = "Registrar usuario",description = "Registra un nuevo usuario si el nombre de usuario no está en uso")
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@RequestBody Map<String, String> payload) {
-        System.out.println("Estas en la funcion de registrar usuario");
+
+    public ResponseEntity<String> registerUser(@RequestBody Map<String, String> payload) {
+
         String username = payload.get("username");
         String password = payload.get("password");
         String name = payload.get("name");
@@ -43,18 +53,15 @@ public class RegisterController{
         String dni = payload.get("dni");
 
         if (clientRepository.findByUsername(username).isPresent()) {
-            return ResponseEntity.ok("El nombre de usuario ya está en uso");
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("El nombre de usuario ya está en uso");
         }
 
         Client client = new Client(username, password, name, lastName, dni);
-
-        System.out.println(client);
         Role role = roleRepository.findByName("client")
-            .orElseThrow(() -> new RuntimeException("Rol no encontrado"));
+                .orElseThrow(() -> new RuntimeException("Rol no encontrado"));
         client.setRole(role);
         clientRepository.save(client);
 
-        return ResponseEntity.ok("Usuario registrado correctamente");
+        return ResponseEntity.status(HttpStatus.CREATED).body("Usuario registrado correctamente");
     }
-
 }
