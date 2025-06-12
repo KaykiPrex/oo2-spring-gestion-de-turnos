@@ -5,6 +5,7 @@ import com.unla.grupo18.model.Client;
 import com.unla.grupo18.model.Role;
 import com.unla.grupo18.repositories.IClientRepository;
 import com.unla.grupo18.repositories.IRoleRepository;
+import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,12 +26,13 @@ public class RegisterController {
         this.roleRepository = roleRepository;
     }
 
+    @Hidden
     @GetMapping("/register")
     public ModelAndView showRegisterPage() {
         return new ModelAndView("register");
     }
 
-
+    @Hidden
     @PostMapping("/register")
     public ResponseEntity<String> registerUser(@RequestBody Map<String, String> payload) {
 
