@@ -5,19 +5,12 @@ import com.unla.grupo18.model.Client;
 import com.unla.grupo18.model.Role;
 import com.unla.grupo18.repositories.IClientRepository;
 import com.unla.grupo18.repositories.IRoleRepository;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import java.util.Map;
-
-
-@Tag(name = "Controlador de registro", description = "Todo lo relacionado con el registro de nuevo usuario")
 
 @RestController
 @RequestMapping("/auth")
@@ -31,19 +24,14 @@ public class RegisterController {
         this.clientRepository = clientRepository;
         this.roleRepository = roleRepository;
     }
-    @Operation(summary = "Mostrar página de registro", description = "Devuelve la vista de registro")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Vista de registro cargada correctamente")
-    })
 
     @GetMapping("/register")
     public ModelAndView showRegisterPage() {
         return new ModelAndView("register");
     }
 
-    @Operation(summary = "Registrar usuario",description = "Registra un nuevo usuario si el nombre de usuario no está en uso")
-    @PostMapping("/register")
 
+    @PostMapping("/register")
     public ResponseEntity<String> registerUser(@RequestBody Map<String, String> payload) {
 
         String username = payload.get("username");

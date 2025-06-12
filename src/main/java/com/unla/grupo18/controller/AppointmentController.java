@@ -4,6 +4,7 @@ import com.unla.grupo18.infrastructure.notification.MailSender;
 import com.unla.grupo18.model.Appointment;
 import com.unla.grupo18.services.AppointmentService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.mail.MessagingException;
 import org.springframework.stereotype.Controller;
@@ -25,7 +26,7 @@ public class AppointmentController {
         this.service = service;
         this.mailSender = mailSender;
     }
-    @Operation(summary = "Cancelador de turnos desde el cliente", description = "Cancela el turno desde la parte del cliente y se envia un mail")
+    @Operation(summary = "Cancelador de turnos desde el cliente", description = "Cancela el turno desde la parte del cliente y se envia un mail", security = @SecurityRequirement(name = "basicAuth"))
     @PostMapping("{id}/clients/{clientid}")
     public String deleteClient(@PathVariable int id, @PathVariable int clientid, RedirectAttributes redirectAttributes) throws MessagingException, UnsupportedEncodingException {
         Appointment appointment = service.getAppointmentsById(id) ;
@@ -37,10 +38,9 @@ public class AppointmentController {
         redirectAttributes.addFlashAttribute("mensaje", "Se canceló el turno correctamente.");
         return "redirect:/users/clients/home";
     }
-
-    @Operation(summary = "Cancelador de turnos desde el profesional", description = "Cancela el turno desde la parte del profesional y se envia un mail")
-    @PutMapping("/{id}/cancelar-turno")
-    public String removeClientForProfessional(@PathVariable Integer id,RedirectAttributes redirectAttributes ) throws MessagingException, UnsupportedEncodingException {
+    @Operation(summary = "Cancelador de turnos desde el cliente", description = "Cancela el turno desde la parte del cliente y se envia un mail", security = @SecurityRequirement(name = "basicAuth"))
+    @PostMapping("/{id}/cancelar-turno")
+    public String removeClientForProfessional(@PathVariable int id,RedirectAttributes redirectAttributes ) throws MessagingException, UnsupportedEncodingException {
         Appointment appointment = service.getAppointmentsById(id);
         String professionalDisplayName = appointment.getProfessional().getName() + " " +appointment.getProfessional().getLastName();
         appointment.deleteClient();

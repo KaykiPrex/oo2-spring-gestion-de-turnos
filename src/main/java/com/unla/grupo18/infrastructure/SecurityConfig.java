@@ -1,6 +1,9 @@
 package com.unla.grupo18.infrastructure;
 
 import com.unla.grupo18.services.UserDetailsServiceImpl;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -44,7 +47,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.DELETE, "/api/**").permitAll()
                         .requestMatchers(HttpMethod.PUT, "/calendar/**").permitAll()
                         .anyRequest().authenticated()
-                )
+                ).httpBasic(httpBasic -> {})
                 .formLogin(form -> form
                         .loginPage("/login")
                         .defaultSuccessUrl("/login-success", true)

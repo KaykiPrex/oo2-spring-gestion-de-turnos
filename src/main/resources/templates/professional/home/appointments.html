@@ -42,7 +42,7 @@
     function cancelarTurno(id) {
         if (confirm("¿Estás seguro que deseas cancelar el turno?")) {
             fetch('/appointments/' + id + '/cancelar-turno', {
-                method: 'PUT',
+                method: 'POST',
                  headers: {
             'Content-Type': 'application/json'
              }
