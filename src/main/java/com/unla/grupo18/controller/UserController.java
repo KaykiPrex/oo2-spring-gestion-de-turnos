@@ -1,6 +1,7 @@
 package com.unla.grupo18.controller;
 
-import com.unla.grupo18.services.UserService;
+import com.unla.grupo18.services.UserServiceImpl;
+import com.unla.grupo18.services.abstraction.IUserService;
 import com.unla.grupo18.services.request.CreateUserRequest;
 import com.unla.grupo18.services.response.CreateUserResponse;
 import org.springframework.http.MediaType;
@@ -17,9 +18,9 @@ import java.net.URI;
 @RequestMapping("users")
 public class UserController {
 
-    final UserService service;
+    final IUserService service;
 
-    public UserController(UserService service) {
+    public UserController(UserServiceImpl service) {
         this.service = service;
     }
 

@@ -2,10 +2,10 @@ package com.unla.grupo18.controller;
 
 import com.unla.grupo18.model.Appointment;
 import com.unla.grupo18.model.Client;
-import com.unla.grupo18.services.AppointmentService;
+import com.unla.grupo18.services.AppointmentServiceImpl;
+import com.unla.grupo18.services.abstraction.IAppointmentService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,21 +19,17 @@ import java.util.List;
 @RequestMapping("/users/professionals")
 @PreAuthorize("hasAuthority('professional')")
 public class UserProfessionalController {
-    private final AppointmentService appointmentService;
+    private final IAppointmentService appointmentService;
 
-    public UserProfessionalController(AppointmentService appointmentService) {
+    public UserProfessionalController(AppointmentServiceImpl appointmentService) {
         this.appointmentService = appointmentService;
     }
 
     @GetMapping("/home")
     public String getHome(HttpSession session, Model model) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
         Integer userId = (Integer) session.getAttribute("userId");
-
         model.addAttribute("userId", userId);
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-
         model.addAttribute("username", username);
         return "professional/home";
     }

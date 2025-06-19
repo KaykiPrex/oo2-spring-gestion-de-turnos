@@ -1,7 +1,8 @@
 package com.unla.grupo18.controller;
 
 import com.unla.grupo18.model.Service;
-import com.unla.grupo18.services.ServiceService;
+import com.unla.grupo18.services.ServiceServiceImpl;
+import com.unla.grupo18.services.abstraction.IServiceService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/services")
 public class ServiceController {
-    private final ServiceService service;
+    private final IServiceService service;
 
-    public ServiceController(ServiceService service) {
+    public ServiceController(ServiceServiceImpl service) {
         this.service = service;
     }
 

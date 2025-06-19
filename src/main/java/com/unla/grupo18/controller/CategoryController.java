@@ -1,7 +1,8 @@
 package com.unla.grupo18.controller;
 
 import com.unla.grupo18.model.Category;
-import com.unla.grupo18.services.CategoryService;
+import com.unla.grupo18.services.CategoryServiceImpl;
+import com.unla.grupo18.services.abstraction.ICategoryService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/categories")
 public class CategoryController {
-    private final CategoryService service;
+    private final ICategoryService service;
 
-    public CategoryController(CategoryService service) {
+    public CategoryController(CategoryServiceImpl service) {
         this.service = service;
     }
 

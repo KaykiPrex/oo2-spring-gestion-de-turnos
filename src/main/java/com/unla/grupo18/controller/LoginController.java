@@ -1,22 +1,17 @@
 package com.unla.grupo18.controller;
 
-import com.unla.grupo18.model.User;
-import com.unla.grupo18.repositories.IUserRepository;
+import com.unla.grupo18.services.abstraction.IUserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.util.Optional;
-
 @Controller
 public class LoginController {
-    private final IUserRepository userRepository;
+    private final IUserService service;
 
-    public LoginController(IUserRepository userRepository) {
-        this.userRepository = userRepository;
+    public LoginController(IUserService service) {
+        this.service = service;
     }
 
     @GetMapping("/login")
@@ -27,7 +22,7 @@ public class LoginController {
     @GetMapping("/login-success")
     public String redirectByRole(HttpSession session, Authentication authentication) {
         var authorities = authentication.getAuthorities();
-        validateUserSession(session);
+        service.validateUserSession(session);
 
         if (authorities.stream().anyMatch(a -> a.getAuthority().equals("admin"))) {
             return "redirect:users/admin/home";
@@ -40,16 +35,4 @@ public class LoginController {
         return "redirect:/home";
     }
 
-    private void validateUserSession(HttpSession session) {
-        Integer userId = (Integer) session.getAttribute("userId");
-
-        if (userId == null) {
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            if (authentication != null && authentication.getPrincipal() instanceof UserDetails userDetails) {
-                Optional<User> user = userRepository.findByUsername(userDetails.getUsername());
-                userId = user.map(User::getId).orElse(null);
-                session.setAttribute("userId", userId);
-            }
-        }
-    }
 }

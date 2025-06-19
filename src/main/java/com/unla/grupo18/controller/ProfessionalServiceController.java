@@ -1,7 +1,8 @@
 package com.unla.grupo18.controller;
 
 import com.unla.grupo18.model.ProfessionalService;
-import com.unla.grupo18.services.ProfessionalServiceService;
+import com.unla.grupo18.services.ProfessionalServiceServiceImpl;
+import com.unla.grupo18.services.abstraction.IProfessionalServiceService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/professionalservices")
 public class ProfessionalServiceController {
-    private final ProfessionalServiceService service;
+    private final IProfessionalServiceService service;
 
-    public ProfessionalServiceController(ProfessionalServiceService service) {
+    public ProfessionalServiceController(ProfessionalServiceServiceImpl service) {
         this.service = service;
     }
 
