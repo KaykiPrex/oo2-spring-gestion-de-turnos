@@ -1,5 +1,6 @@
 package com.unla.grupo18.infrastructure.notification;
 
+import com.unla.grupo18.infrastructure.notification.abstraction.IMailSender;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.slf4j.Logger;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.io.UnsupportedEncodingException;
 
 @Service("MailSenderCustom")
-public class MailSender {
+public class MailSender implements IMailSender {
     private final JavaMailSender mailSender;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private final String MAIL_FROM = "test@gmail.com";
@@ -21,6 +22,7 @@ public class MailSender {
         this.mailSender = mailSender;
     }
 
+    @Override
     public void send(String to, String subject, String message) throws MessagingException, UnsupportedEncodingException {
         MimeMessage simpleMessage = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(simpleMessage, true);
