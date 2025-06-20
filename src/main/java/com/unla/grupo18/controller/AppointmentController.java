@@ -3,12 +3,10 @@ package com.unla.grupo18.controller;
 import com.unla.grupo18.infrastructure.notification.MailSender;
 import com.unla.grupo18.model.Appointment;
 import com.unla.grupo18.services.AppointmentService;
+import com.unla.grupo18.services.ServiceService;
 import jakarta.mail.MessagingException;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.io.UnsupportedEncodingException;
 
@@ -17,10 +15,12 @@ import java.io.UnsupportedEncodingException;
 public class AppointmentController {
     private final AppointmentService service;
     private final MailSender mailSender;
+    private final ServiceService serviceService;
 
-    public AppointmentController(AppointmentService service, MailSender mailSender) {
+    public AppointmentController(AppointmentService service, MailSender mailSender, ServiceService serviceService) {
         this.service = service;
         this.mailSender = mailSender;
+        this.serviceService = serviceService;
     }
 
     @PostMapping("{id}/clients/{clientid}")
@@ -45,5 +45,8 @@ public class AppointmentController {
         redirectAttributes.addFlashAttribute("mensaje", "Se canceló el turno correctamente.");
         return "redirect:/users/professional/home";
     }
+
+
+
 
 }
