@@ -1,60 +1,129 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
-    <title>Register</title>
-    <link rel="stylesheet" th:href="@{/css/login.css}">
+    <meta charset="UTF-8">
+    <title>Registrarse</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-</head>
-<body> <p th:if="${message}" th:text="${message}" style="color: red;"></p>
+    <style>
+        body {
+          font-family: 'Poppins', sans-serif;
+          background-color: #f9f5f3;
+        }
 
-<div class="login-container-wrapper clearfix">
-    <h2><strong>Registrate</strong></h2>
-    <form id= "registerForm" class="form-horizontal login-form">
-        <div class="form-group relative">
-            <input id="username" class="form-control input-lg" type="text" name= "username" placeholder="Username" required>
-            <i class="fa fa-user"></i>
+        .register-wrapper {
+          min-height: 100vh;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background-color: rosybrown;
+        }
+
+        .register-card {
+          background-color: white;
+          padding: 2.5rem 2rem;
+          border-radius: 12px;
+          box-shadow: 0 0 20px rgba(0,0,0,0.1);
+          max-width: 500px;
+          width: 100%;
+        }
+
+        .register-card h2 {
+          text-align: center;
+          color: rosybrown;
+          margin-bottom: 1.5rem;
+        }
+
+        .form-control:focus {
+          border-color: rosybrown;
+          box-shadow: 0 0 0 0.2rem rgba(188,143,143,0.25);
+        }
+
+        .btn-rosybrown {
+          background-color: rosybrown;
+          border-color: rosybrown;
+          color: white;
+        }
+
+        .btn-rosybrown:hover {
+          background-color: #b87c7c;
+          border-color: #b87c7c;
+        }
+
+        .mensaje-error {
+          color: red;
+          text-align: center;
+          margin-bottom: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+<p th:if="${message}" th:text="${message}" class="mensaje-error"></p>
+
+<div class="register-wrapper">
+    <form id="registerForm" class="register-card">
+        <h2><strong>Registrate</strong></h2>
+
+        <div class="mb-3">
+            <label for="username" class="form-label">Usuario</label>
+            <input id="username" class="form-control" type="text" name="username" required>
         </div>
-        <div class="form-group relative password">
-            <input id="password" class="form-control input-lg" type="password" name="password" placeholder="Password" required>
-            <i class="fa fa-lock"></i>
+
+        <div class="mb-3">
+            <label for="password" class="form-label">Contraseña</label>
+            <input id="password" class="form-control" type="password" name="password" required>
         </div>
-        <div class="form-group relative name">
-            <input id="name" class="form-control input-lg" type="text" name= "name" placeholder="nombre" required>
-            <i class="fa fa-user"></i>
+
+        <div class="mb-3">
+            <label for="name" class="form-label">Nombre</label>
+            <input id="name" class="form-control" type="text" name="name" required>
         </div>
-        <div class="form-group relative lastname">
-            <input id="lastname" class="form-control input-lg" type="text" name= "lastname" placeholder="apellido" required>
-            <i class="fa fa-user"></i>
+
+        <div class="mb-3">
+            <label for="lastname" class="form-label">Apellido</label>
+            <input id="lastname" class="form-control" type="text" name="lastname" required>
         </div>
-        <div class="form-group relative dni">
-            <input id="dni" class="form-control input-lg" type="text" name= "dni" placeholder="dni" required>
-            <i class="fa fa-user"></i>
+
+        <div class="mb-4">
+            <label for="dni" class="form-label">DNI</label>
+            <input id="dni" class="form-control" type="text" name="dni" required>
         </div>
-        <div class="form-group">
-            <button type="submit" class="btn btn-success btn-lg btn-block">Registrarse</button>
+
+        <div class="d-grid">
+            <button type="submit" class="btn btn-rosybrown">Registrarse</button>
         </div>
     </form>
 </div>
 
-</body>
-</html>
-
 <script>
     document.getElementById('registerForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        fetch('/auth/register', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                username: document.getElementById('username').value,
-                password: document.getElementById('password').value,
-                name: document.getElementById("name").value,
-                lastName: document.getElementById("lastname").value,
-                dni: document.getElementById("dni").value
-            })
-        }).then(response => response.text())
-          .then(data => alert(data));
+      e.preventDefault();
+      fetch('/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          username: document.getElementById('username').value,
+          password: document.getElementById('password').value,
+          name: document.getElementById("name").value,
+          lastName: document.getElementById("lastname").value,
+          dni: document.getElementById("dni").value
+        })
+      }).then(response => {
+        if (response.status === 201) {
+          alert('¡Registro exitoso!');
+          window.location.href = "/login";
+        } else {
+          alert('Error al registrar. Intentalo de nuevo.');
+        }
+      }).catch(error => {
+        alert('Ocurrió un error en la solicitud.');
+        console.error(error);
+      });
     });
 </script>
+</body>
+</html>

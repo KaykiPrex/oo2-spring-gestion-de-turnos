@@ -3,29 +3,142 @@
 <head>
     <meta charset="UTF-8">
     <title>Dashboard</title>
-    <link rel="stylesheet" th:href="@{/css/index.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+          margin: 0;
+          scroll-behavior: smooth;
+        }
+
+      .main-header {
+          position: sticky;
+          top: 0;
+          z-index: 999;
+          background-color: rosybrown;
+          color: white;
+          padding: 1rem 2rem;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          flex-wrap: wrap;
+      }
+
+
+        .main-header a {
+          color: white;
+          margin-right: 1rem;
+          text-decoration: none;
+          font-weight: 500;
+        }
+
+        .main-header a:hover {
+          text-decoration: underline;
+        }
+
+        .seccion-opcion {
+          height: 100vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: white;
+          font-size: 2.5rem;
+          font-weight: bold;
+          scroll-margin-top: 80px;
+          cursor: pointer;
+          transition: transform 0.2s ease;
+        }
+
+        .seccion-opcion:hover {
+          transform: scale(1.02);
+        }
+
+        .rojo {
+            background-color: #cd5c5c;
+
+        }
+        .celeste { background-color: #b0c4de; }
+        .amarillo { background-color: #d2b48c; }
+        .oscuro { background-color: #8b5f65; }
+        .contenido-opcion {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: center;
+          gap: 1rem;
+          text-align: center;
+          padding: 2rem;
+          flex-wrap: wrap;
+        }
+
+        .titulo-opcion {
+          font-size: 2rem;
+          font-weight: bold;
+        }
+
+        .descripcion-opcion {
+          font-size: 1.2rem;
+          opacity: 0.85;
+        }
+
+
+        @media (max-width: 768px) {
+          .main-header {
+            flex-direction: column;
+            align-items: flex-start;
+          }
+        }
+    </style>
 </head>
 
 <body>
 <header class="main-header">
-    <div class="company-name"><h2 class="nombre-empresa">Grupo 18</h2></div>
-    <nav>
-        <form th:action="@{/logout}" method="post">
-            <button type="submit">Cerrar sesion</button>
+    <h2 class="mb-0">Grupo 18</h2>
+    <nav class="d-flex align-items-center flex-wrap mt-2">
+        <a href="#turnos">Turnos de día</a>
+        <a href="#agenda">Mi agenda</a>
+        <a href="#clientes">Mis clientes</a>
+        <a href="#nuevo">Nuevo turno</a>
+
+        <p class="ms-3 mb-0">Bienvenido, <span th:text="${username}"></span></p>
+        <form th:action="@{/logout}" method="post" class="ms-3">
+            <button type="submit" class="btn btn-light btn-sm">Cerrar sesión</button>
         </form>
-
-        <p>Bienvenido, <span th:text="${username}"></span></p>
-
     </nav>
 </header>
-<div class="contenedor">
-    <div class="opciones">
-        <div th:onclick="|window.location.href='/users/professionals/appointments/${userId}/today'|" class="opcion rojo">Turnos de día</div>
-        <div th:onclick="|window.location.href='/users/professionals/appointments/${userId}'|" class="opcion celeste">Mi agenda</div>
-        <div th:onclick="|window.location.href='/users/professionals/${userId}/clients'|" class="opcion amarillo">Mis clientes</div>
-        <div th:onclick="|window.location.href='/users/professionals/appointments/new'|" class="opcion oscuro">Nuevo turno</div>
-    </div>
 
-</div>
+<main>
+    <section id="turnos" class="seccion-opcion rojo"
+             th:onclick="|window.location.href='/users/professionals/appointments/${userId}/today'|">
+        <div class="contenido-opcion">
+            <span class="titulo-opcion">Turnos de día</span>
+            <span class="descripcion-opcion">· Visualizá todos los turnos agendados para hoy.</span>
+        </div>
+    </section>
+
+    <section id="agenda" class="seccion-opcion celeste"
+             th:onclick="|window.location.href='/users/professionals/appointments/${userId}'|">
+        <div class="contenido-opcion">
+            <span class="titulo-opcion">Mi agenda</span>
+            <span class="descripcion-opcion">· Consultá tu calendario de turnos completo.</span>
+        </div>
+    </section>
+
+    <section id="clientes" class="seccion-opcion amarillo"
+             th:onclick="|window.location.href='/users/professionals/${userId}/clients'|">
+        <div class="contenido-opcion">
+            <span class="titulo-opcion">Mis clientes</span>
+            <span class="descripcion-opcion">· Accedé a la información de tus pacientes.</span>
+        </div>
+    </section>
+
+    <section id="nuevo" class="seccion-opcion oscuro"
+             th:onclick="|window.location.href='/users/professionals/appointments/new'|">
+        <div class="contenido-opcion">
+            <span class="titulo-opcion">Nuevo turno</span>
+            <span class="descripcion-opcion">· Agendá un nuevo turno personalizado.</span>
+        </div>
+    </section>
+</main>
 </body>
 </html>

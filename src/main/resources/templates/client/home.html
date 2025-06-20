@@ -1,31 +1,114 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <script th:if="${mensaje}">
         alert("[[${mensaje}]]");
     </script>
-    <title>Dashboard</title>
-    <link rel="stylesheet" th:href="@{/css/index.css}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+          margin: 0;
+          scroll-behavior: smooth;
+        }
+
+        header.main-header {
+          position: sticky;
+          top: 0;
+          z-index: 999;
+          background-color: rosybrown;
+          color: white;
+          padding: 1rem 2rem;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          flex-wrap: wrap;
+        }
+
+        header nav {
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+        }
+
+        .seccion-opcion {
+          height: 100vh;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 2rem;
+          scroll-margin-top: 80px;
+          cursor: pointer;
+          transition: transform 0.2s ease;
+        }
+
+        .seccion-opcion:hover {
+          transform: scale(1.02);
+        }
+
+        .contenido-opcion {
+          display: flex;
+          flex-direction: row;
+          gap: 1rem;
+          align-items: center;
+          flex-wrap: wrap;
+          text-align: center;
+        }
+
+        .titulo-opcion {
+          font-size: 2rem;
+          font-weight: bold;
+          color: white;
+        }
+
+        .descripcion-opcion {
+          font-size: 1.2rem;
+          color: white;
+          opacity: 0.85;
+        }
+
+        .celeste { background-color: #b0c4de; }
+        .amarillo { background-color: #d2b48c; }
+
+        @media (max-width: 768px) {
+          .contenido-opcion {
+            flex-direction: column;
+          }
+        }
+    </style>
 </head>
+
 <body>
 <header class="main-header">
-    <div class="company-name"><h2 class="nombre-empresa">Grupo 18</h2></div>
+    <div><h2 class="mb-0">Grupo 18</h2></div>
     <nav>
-        <p><span th:text="${username}" style="font-size: 24px;padding-right: 20px;"></span></p>
-        <form th:action="@{/logout}" method="post">
-            <button type="submit">Cerrar sesion</button>
+        <a href="#mis-turnos" class="text-white text-decoration-none fw-semibold">Mis turnos</a>
+        <a href="#solicitar-turno" class="text-white text-decoration-none fw-semibold">Solicitar turno</a>
+        <span th:text="${username}" style="font-size: 1.4rem; margin-left: 1rem;"></span>
+        <form th:action="@{/logout}" method="post" style="margin-left: 1rem;">
+            <button type="submit" class="btn btn-light btn-sm">Cerrar sesión</button>
         </form>
     </nav>
 </header>
-<div class="contenedor">
-    <div class="opciones">
-        <div th:onclick="|window.location.href='/users/clients/appointments'|" class="opcion celeste">Mis turnos</div>
-        <div th:onclick="|window.location.href='/users/clients/categories'|" class="opcion amarillo">Solicitar turno</div>
-    </div>
 
-</div>
+<main>
+    <section id="mis-turnos" class="seccion-opcion celeste"
+             th:onclick="|window.location.href='/users/clients/appointments'|">
+        <div class="contenido-opcion">
+            <span class="titulo-opcion">Mis turnos</span>
+            <span class="descripcion-opcion">· Accedé a los turnos que ya tenés reservados.</span>
+        </div>
+    </section>
+
+    <section id="solicitar-turno" class="seccion-opcion amarillo"
+             th:onclick="|window.location.href='/users/clients/categories'|">
+        <div class="contenido-opcion">
+            <span class="titulo-opcion">Solicitar turno</span>
+            <span class="descripcion-opcion">· Elegí una especialidad y reservá un nuevo turno fácilmente.</span>
+        </div>
+    </section>
+</main>
 </body>
 </html>
