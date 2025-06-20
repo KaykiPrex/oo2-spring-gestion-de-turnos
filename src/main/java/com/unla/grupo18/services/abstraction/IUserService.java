@@ -11,4 +11,6 @@ public interface IUserService {
     User update(User user);
     void delete(int id);
     User findById(int id);
+
+    void register(String username, String password, String name, String lastName, String dni);
 }

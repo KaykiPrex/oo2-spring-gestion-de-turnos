@@ -1,15 +1,13 @@
 package com.unla.grupo18.controller;
 
 
-import com.unla.grupo18.model.Client;
-import com.unla.grupo18.model.Role;
-import com.unla.grupo18.repositories.IClientRepository;
-import com.unla.grupo18.repositories.IRoleRepository;
+import com.unla.grupo18.services.abstraction.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
 import java.util.Map;
 
 
@@ -17,39 +15,27 @@ import java.util.Map;
 @RequestMapping("/auth")
 public class RegisterController {
 
-    private final IClientRepository clientRepository;
-    private final IRoleRepository roleRepository;
+    private final IUserService service;
 
     @Autowired
-    public RegisterController(IClientRepository clientRepository, IRoleRepository roleRepository) {
-        this.clientRepository = clientRepository;
-        this.roleRepository = roleRepository;
+    public RegisterController(IUserService service) {
+        this.service = service;
     }
     @GetMapping("/register")
     public ModelAndView showRegisterPage() {
-        return new ModelAndView("register"); //uso mav para retornar vistas ya que como es restcontroller no puedo
+        return new ModelAndView("register");
     }
 
 
     @PostMapping("/register")
     public ResponseEntity<String> registerUser(@RequestBody Map<String, String> payload) {
-
         String username = payload.get("username");
         String password = payload.get("password");
         String name = payload.get("name");
         String lastName = payload.get("lastName");
         String dni = payload.get("dni");
 
-        if (clientRepository.findByUsername(username).isPresent()) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("El nombre de usuario ya está en uso");
-        }
-
-        Client client = new Client(username, password, name, lastName, dni);
-        Role role = roleRepository.findByName("client")
-                .orElseThrow(() -> new RuntimeException("Rol no encontrado"));
-        client.setRole(role);
-        clientRepository.save(client);
-
+        service.register(username, password, name, lastName, dni);
         return ResponseEntity.status(HttpStatus.CREATED).body("Usuario registrado correctamente");
     }
 }
