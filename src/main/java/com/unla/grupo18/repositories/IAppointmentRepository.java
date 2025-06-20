@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface IAppointmentRepository extends JpaRepository<Appointment, Integer> {
@@ -17,5 +18,8 @@ public interface IAppointmentRepository extends JpaRepository<Appointment, Integ
     List<Appointment> findBydate(LocalDate date);
     @Query("SELECT DISTINCT a.client FROM Appointment a WHERE a.professional.id = :professionalId AND a.client IS NOT NULL")
     List<Client> findDistinctClientsByProfessional(@Param("professionalId") int professionalId);
+    @Query("SELECT a.client FROM Appointment a WHERE a.client.username = :username")
+    Client findByUsername(@Param("username") String username);
+
 
 }

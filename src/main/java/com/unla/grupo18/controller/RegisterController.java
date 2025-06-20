@@ -1,39 +1,41 @@
 package com.unla.grupo18.controller;
-
+import com.unla.grupo18.services.UserService;
 
 import com.unla.grupo18.model.Client;
 import com.unla.grupo18.model.Role;
 import com.unla.grupo18.repositories.IClientRepository;
 import com.unla.grupo18.repositories.IRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
+
+import java.util.HashMap;
 import java.util.Map;
 
-
-@RestController
-@RequestMapping("/auth")
-public class RegisterController {
-
+@Controller
+public class RegisterController{
+    @Autowired
     private final IClientRepository clientRepository;
+    @Autowired
     private final IRoleRepository roleRepository;
 
-    @Autowired
+
     public RegisterController(IClientRepository clientRepository, IRoleRepository roleRepository) {
         this.clientRepository = clientRepository;
         this.roleRepository = roleRepository;
+
     }
+
     @GetMapping("/register")
-    public ModelAndView showRegisterPage() {
-        return new ModelAndView("register"); //uso mav para retornar vistas ya que como es restcontroller no puedo
+    public String showRegisterPage() {
+        return "register";
     }
-
-
     @PostMapping("/register")
-    public ResponseEntity<String> registerUser(@RequestBody Map<String, String> payload) {
-
+    public ResponseEntity<?> registerUser(@RequestBody Map<String, String> payload) {
+        System.out.println("Estas en la funcion de registrar usuario");
         String username = payload.get("username");
         String password = payload.get("password");
         String name = payload.get("name");
@@ -41,16 +43,18 @@ public class RegisterController {
         String dni = payload.get("dni");
 
         if (clientRepository.findByUsername(username).isPresent()) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("El nombre de usuario ya está en uso");
+            return ResponseEntity.ok("El nombre de usuario ya está en uso");
         }
 
         Client client = new Client(username, password, name, lastName, dni);
+
+        System.out.println(client);
         Role role = roleRepository.findByName("client")
-                .orElseThrow(() -> new RuntimeException("Rol no encontrado"));
+            .orElseThrow(() -> new RuntimeException("Rol no encontrado"));
         client.setRole(role);
         clientRepository.save(client);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body("Usuario registrado correctamente");
+        return ResponseEntity.ok("Usuario registrado correctamente");
     }
-}
 
+}
