@@ -8,12 +8,15 @@ import com.unla.grupo18.repositories.IClientRepository;
 import com.unla.grupo18.services.abstraction.IAppointmentService;
 import com.unla.grupo18.services.abstraction.IMailSenderService;
 import jakarta.mail.MessagingException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AppointmentServiceImpl implements IAppointmentService {
@@ -74,6 +77,21 @@ public class AppointmentServiceImpl implements IAppointmentService {
                 .orElseThrow(() -> new RuntimeException("Cliente no encontrado"))
                 .getId();
         return appointmentRepository.findByClientId(userId);
+    }
+
+    @Override
+    public void assignClientToAppointment(Integer id) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Client client = (Client) authentication.getPrincipal();
+
+        Optional<Appointment> optionalAppointment = appointmentRepository.findById(id);
+        if (optionalAppointment.isPresent()) {
+            com.unla.grupo18.model.Appointment appointment = optionalAppointment.get();
+            appointment.setClient(client);
+            appointmentRepository.save(appointment);
+        } else {
+            throw new RuntimeException("No se pudo sacar turno");
+        }
     }
 
     @Override

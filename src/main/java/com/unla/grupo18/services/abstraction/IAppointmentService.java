@@ -19,4 +19,6 @@ public interface IAppointmentService {
     void cancelAppointmentForProfessionalByAppointmentId(int id) throws MessagingException, UnsupportedEncodingException;
 
     List<Appointment> getAppointmentsForClient(Principal principal);
+
+    void assignClientToAppointment(Integer id);
 }
