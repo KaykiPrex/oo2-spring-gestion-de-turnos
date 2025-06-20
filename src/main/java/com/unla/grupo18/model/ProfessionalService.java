@@ -3,6 +3,7 @@ package com.unla.grupo18.model;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.time.LocalTime;
 import java.util.List;
 
 @Entity
@@ -12,6 +13,13 @@ public class ProfessionalService {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private BigDecimal price;
+    @Column(name = "init_work_hour")
+    private LocalTime initWorkHour;
+    @Column(name = "end_work_hour")
+    private LocalTime endWorkHour;
+    @Column(name = "work_days")
+    private String workDays;
+    //private List<DayOfWeek> workDays;
     @ManyToOne
     @JoinColumn(name = "professional_id")
     private Professional professional;
@@ -46,6 +54,30 @@ public class ProfessionalService {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public LocalTime getInitWorkHour() {
+        return initWorkHour;
+    }
+
+    public void setInitWorkHour(LocalTime initWorkHour) {
+        this.initWorkHour = initWorkHour;
+    }
+
+    public LocalTime getEndWorkHour() {
+        return endWorkHour;
+    }
+
+    public void setEndWorkHour(LocalTime endWorkHour) {
+        this.endWorkHour = endWorkHour;
+    }
+
+    public String getWorkDays() {
+        return workDays;
+    }
+
+    public void setWorkDays(String workDays) {
+        this.workDays = workDays;
     }
 
     public Professional getProfessional() {
