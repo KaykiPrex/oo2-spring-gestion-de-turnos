@@ -26,8 +26,7 @@ import java.util.Optional;
 public class UserClientController {
     private final AppointmentService appointmentService;
     private final CategoryService categoryService;
-    @Autowired
-    private IClientRepository clientRepository;
+
     public UserClientController(AppointmentService appointmentService, CategoryService categoryService) {
         this.appointmentService = appointmentService;
         this.categoryService = categoryService;
@@ -47,17 +46,12 @@ public class UserClientController {
     }
 
     @GetMapping("/appointments")
-    public String getAppoitments(Model model, Principal principal) {
-
-        String username = principal.getName();
-
-        int userId = clientRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("Cliente no encontrado"))
-                .getId();
-        List<Appointment> appointments = appointmentService.getAppointmentsByClient(userId);
+    public String getAppointments(Model model, Principal principal) {
+        List<Appointment> appointments = appointmentService.getAppointmentsForClient(principal);
         model.addAttribute("appointments", appointments);
         return "client/home/appointments";
     }
+
 
     @GetMapping("/categories")
     public String getCategories(Model model) {

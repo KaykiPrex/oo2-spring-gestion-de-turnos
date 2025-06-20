@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "professional_service")
@@ -20,7 +21,19 @@ public class ProfessionalService {
     private Service service;
     @OneToMany(mappedBy = "professionalService")
     private List<Appointment> appointments;
+    @Override
 
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Service)) return false;
+        Service s = (Service) o;
+        return Objects.equals(id, s.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
     public ProfessionalService() {
     }
     public ProfessionalService(List<Appointment> appointments) {

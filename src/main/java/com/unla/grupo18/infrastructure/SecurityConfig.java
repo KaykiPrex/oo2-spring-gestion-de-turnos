@@ -33,6 +33,7 @@ public class SecurityConfig {
                         .requestMatchers("/users/clients/**").hasAuthority("client")
                         .requestMatchers("/users/professionals/**").hasAuthority("professional")
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                        .requestMatchers("/appointments/**").hasAuthority("professional")
                         .requestMatchers("/home").permitAll()
                         .requestMatchers("/login").permitAll()
                         .requestMatchers("/register").permitAll()
@@ -43,6 +44,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT, "/api/**").permitAll()
                         .requestMatchers(HttpMethod.DELETE, "/api/**").permitAll()
                         .requestMatchers(HttpMethod.PUT, "/calendar/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/users/professionals/appointments/**").hasAuthority("professional")
+
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form

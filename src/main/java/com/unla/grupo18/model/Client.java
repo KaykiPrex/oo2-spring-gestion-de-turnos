@@ -71,4 +71,6 @@ public class Client extends User{
     public void setAppointments(List<Appointment> appointments) {
         this.appointments = appointments;
     }
+
+
 }

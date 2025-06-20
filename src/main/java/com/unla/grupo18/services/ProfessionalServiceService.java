@@ -4,6 +4,8 @@ import com.unla.grupo18.model.ProfessionalService;
 import com.unla.grupo18.repositories.IProfessionalServiceRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ProfessionalServiceService {
     private final IProfessionalServiceRepository repository;
@@ -15,4 +17,9 @@ public class ProfessionalServiceService {
     public ProfessionalService getById(String id) {
         return repository.findById(Integer.valueOf(id)).orElseThrow();
     }
+
+    public List<ProfessionalService> findAll() {
+        return repository.findAll();
+    }
+
 }
