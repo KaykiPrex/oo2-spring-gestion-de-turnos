@@ -3,6 +3,7 @@ package com.unla.grupo18.services;
 import com.unla.grupo18.infrastructure.notification.MailSenderTitle;
 import com.unla.grupo18.model.Appointment;
 import com.unla.grupo18.model.Client;
+import com.unla.grupo18.model.Professional;
 import com.unla.grupo18.repositories.IAppointmentRepository;
 import com.unla.grupo18.repositories.IClientRepository;
 import com.unla.grupo18.services.abstraction.IAppointmentService;
@@ -92,6 +93,14 @@ public class AppointmentServiceImpl implements IAppointmentService {
         } else {
             throw new RuntimeException("No se pudo sacar turno");
         }
+    }
+
+    @Override
+    public void create(Appointment appointment) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Professional professional = (Professional) auth.getPrincipal();
+        appointment.setProfessional(professional);
+        appointmentRepository.save(appointment);
     }
 
     @Override

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Nuevo Turno</title>
+  <link rel="stylesheet" th:href="@{/css/new-appointment.css}">
+</head>
+<body>
+<h1>Crear Nuevo Turno</h1>
+<form th:action="@{/users/professionals/appointments/save}" th:object="${appointment}" method="post">
+
+  <label>Fecha :</label>
+  <input type="date" th:field="*{date}" required /><br>
+  <label>Hora:</label>
+  <input type="time" th:field="*{time}" required /><br>
+  <label>Servicio:</label>
+  <label>
+    <select th:field="*{professionalService}" required>
+      <option th:each="s : ${services}"
+              th:value="${s.id}"
+              th:text="${s.name}">
+      </option>
+    </select>
+  </label><br>
+
+  <button type="submit">Generar Turno</button>
+</form>
+
+</body>
+</html>

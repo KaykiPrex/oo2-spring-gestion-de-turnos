@@ -21,4 +21,6 @@ public interface IAppointmentService {
     List<Appointment> getAppointmentsForClient(Principal principal);
 
     void assignClientToAppointment(Integer id);
+
+    void create(Appointment appointment);
 }

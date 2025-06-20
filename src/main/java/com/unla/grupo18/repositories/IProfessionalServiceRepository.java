@@ -4,6 +4,9 @@ import com.unla.grupo18.model.ProfessionalService;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface IProfessionalServiceRepository extends JpaRepository<ProfessionalService, Integer> {
+    List<ProfessionalService> findByProfessionalId(Integer professionalId);
 }

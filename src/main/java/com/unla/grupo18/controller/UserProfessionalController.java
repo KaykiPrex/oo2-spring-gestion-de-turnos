@@ -4,14 +4,13 @@ import com.unla.grupo18.model.Appointment;
 import com.unla.grupo18.model.Client;
 import com.unla.grupo18.services.AppointmentServiceImpl;
 import com.unla.grupo18.services.abstraction.IAppointmentService;
+import com.unla.grupo18.services.abstraction.IProfessionalServiceService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,9 +19,11 @@ import java.util.List;
 @PreAuthorize("hasAuthority('professional')")
 public class UserProfessionalController {
     private final IAppointmentService appointmentService;
+    private final IProfessionalServiceService professionalServiceService;
 
-    public UserProfessionalController(AppointmentServiceImpl appointmentService) {
+    public UserProfessionalController(AppointmentServiceImpl appointmentService, IProfessionalServiceService professionalServiceService) {
         this.appointmentService = appointmentService;
+        this.professionalServiceService = professionalServiceService;
     }
 
     @GetMapping("/home")
@@ -53,6 +54,31 @@ public class UserProfessionalController {
         List<Client> clients = appointmentService.getClientsByProfessional(userId);
         model.addAttribute("clients", clients);
         return "professional/home/clients";
+    }
+
+    @GetMapping("/appointments/new")
+    public String mostrarFormulario(HttpSession session, Model model) {
+        try {
+            model.addAttribute("appointment", new Appointment());
+            model.addAttribute("services", professionalServiceService.getServicesByProfessional(session));
+            return "/professional/home/new-appointment";
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+
+    }
+
+    @PostMapping("/appointments/save")
+    public String saveAppointment(@ModelAttribute("appointment") Appointment appointment, Model model) {
+        try {
+            appointmentService.create(appointment);
+            model.addAttribute("appointment", new Appointment());
+            return "/professional/home/new-appointment";
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
     }
 
 }

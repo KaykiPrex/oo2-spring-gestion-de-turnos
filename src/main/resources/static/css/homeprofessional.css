@@ -1,0 +1,84 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f8f9fa;
+  scroll-behavior: smooth;
+}
+
+.main-header {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  background-color: #6c757d;
+  color: white;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.main-header a {
+  color: white;
+  margin-right: 1rem;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.main-header a:hover {
+  text-decoration: underline;
+}
+
+.seccion-opcion {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #343a40;
+  scroll-margin-top: 80px;
+  cursor: pointer;
+  background-color: white;
+}
+
+.contenido-opcion {
+  background-color: white;
+  border-radius: 1rem;
+  padding: 2.5rem 3rem;
+  text-align: center;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  max-width: 600px;
+  transition: transform 0.2s ease;
+}
+
+.seccion-opcion:hover .contenido-opcion {
+  transform: scale(1.02);
+}
+
+.titulo-opcion {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #212529;
+}
+
+.descripcion-opcion {
+  font-size: 1.1rem;
+  color: #6c757d;
+  margin-top: 0.5rem;
+}
+
+.rojo { background-color: #f8d7da; }
+.celeste { background-color: #d1ecf1; }
+.amarillo { background-color: #fff3cd; }
+.oscuro { background-color: #e2e3e5; }
+
+@media (max-width: 768px) {
+  .main-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .contenido-opcion {
+    padding: 1.5rem 2rem;
+  }
+}
