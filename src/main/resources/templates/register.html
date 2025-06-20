@@ -48,7 +48,15 @@
                 lastName: document.getElementById("apellido").value,
                 dni: document.getElementById("dni").value
             })
-        }).then(response => response.text())
-          .then(data => alert(data));
+        }).then(response => {
+            if (response.status === 201) {
+                alert('¡Registro exitoso!');
+            } else {
+                alert('Error al registrar. Intentalo de nuevo.');
+            }
+        }).catch(error => {
+            alert('Ocurrió un error en la solicitud.');
+            console.error(error);
+        });
     });
 </script>
