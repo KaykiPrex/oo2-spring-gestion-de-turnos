@@ -19,6 +19,8 @@ import java.util.Optional;
 public class AppointmentService {
     @Autowired
     private IAppointmentRepository appointmentRepository;
+    @Autowired
+    private IClientRepository clientRepository;
 
     public AppointmentService(IAppointmentRepository appointmentRepository) {
         this.appointmentRepository = appointmentRepository;
@@ -56,7 +58,7 @@ public class AppointmentService {
     }
     public List<Appointment> getAppointmentsForClient(Principal principal) {
         String username = principal.getName();
-        IClientRepository clientRepository = null;
+
         Client client = clientRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
 

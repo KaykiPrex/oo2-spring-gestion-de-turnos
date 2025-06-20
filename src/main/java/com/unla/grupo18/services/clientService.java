@@ -25,9 +25,9 @@ public class clientService {
         clientRepository.save(client);
     }
 
-    public ResponseEntity<String> createClient(String username, String password, String name, String lastName, String dni) {
+    public void createClient(String username, String password, String name, String lastName, String dni) {
         if (clientRepository.findByUsername(username).isPresent()) {
-            return ResponseEntity.ok("El nombre de usuario ya está en uso");
+            ResponseEntity.ok("El nombre de usuario ya está en uso");
         }
 
         Client client = new Client(username, password, name, lastName, dni);
@@ -38,7 +38,6 @@ public class clientService {
         client.setRole(role);
         clientRepository.save(client);
 
-        return null;
     }
 
 }
