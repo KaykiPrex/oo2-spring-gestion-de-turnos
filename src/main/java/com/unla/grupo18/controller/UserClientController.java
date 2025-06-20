@@ -2,9 +2,10 @@ package com.unla.grupo18.controller;
 import com.unla.grupo18.repositories.IClientRepository;
 import com.unla.grupo18.model.Appointment;
 import com.unla.grupo18.model.Category;
-import com.unla.grupo18.model.Client;
-import com.unla.grupo18.services.AppointmentService;
-import com.unla.grupo18.services.CategoryService;
+import com.unla.grupo18.services.AppointmentServiceImpl;
+import com.unla.grupo18.services.CategoryServiceImpl;
+import com.unla.grupo18.services.abstraction.IAppointmentService;
+import com.unla.grupo18.services.abstraction.ICategoryService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,18 +18,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.security.Principal;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/users/clients")
 @PreAuthorize("hasAuthority('client')")
 
 public class UserClientController {
-    private final AppointmentService appointmentService;
-    private final CategoryService categoryService;
+    private final IAppointmentService appointmentService;
+    private final ICategoryService categoryService;
     @Autowired
     private IClientRepository clientRepository;
-    public UserClientController(AppointmentService appointmentService, CategoryService categoryService) {
+    public UserClientController(AppointmentServiceImpl appointmentService, CategoryServiceImpl categoryService) {
         this.appointmentService = appointmentService;
         this.categoryService = categoryService;
     }
@@ -36,12 +36,9 @@ public class UserClientController {
     @GetMapping("/home")
     public String getDashboard(HttpSession session, Model model) {
         Integer userId = (Integer) session.getAttribute("userId");
-        model.addAttribute("userId", userId);
-
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
         String username = authentication.getName();
-
+        model.addAttribute("userId", userId);
         model.addAttribute("username", username);
         return "client/home";
     }
@@ -49,12 +46,7 @@ public class UserClientController {
     @GetMapping("/appointments")
     public String getAppoitments(Model model, Principal principal) {
 
-        String username = principal.getName();
-
-        int userId = clientRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("Cliente no encontrado"))
-                .getId();
-        List<Appointment> appointments = appointmentService.getAppointmentsByClient(userId);
+        List<Appointment> appointments = appointmentService.getAppointmentsForClient(principal);
         model.addAttribute("appointments", appointments);
         return "client/home/appointments";
     }
