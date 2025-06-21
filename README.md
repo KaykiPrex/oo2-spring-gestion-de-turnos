@@ -31,12 +31,12 @@ mvn spring-boot:run
 | DB_MYSQL_SCHEMA | db_appointment_planner;  |
 | DB_MYSQL_URL | jdbc:mysql://localhost:3306/db_appointment_planner  | 
 | SENDER_MAIL_HOST | smtp.gmail.com  | 
-| SENDER_MAIL_USER | Ingrese Mail origen  |
-| SENDER_MAIL_PASS | Ingrese token de autorización  | 
+| SENDER_MAIL_USER | Ingrese Mail enviado en el documento  |
+| SENDER_MAIL_PASS | Ingrese token enviado en el documento  | 
 | SENDER_MAIL_PORT | 587  | 
 | SENDER_MAIL_TEST | Ingrese un mail de destino para recibir correo  | 
 
-[ IMPORTANT ] Por razones de seguridad el SENDER_MAIL_USER y SENDER_MAIL_PASS se enviara en el documento de la entraga.
+[ IMPORTANT ] Por razones de seguridad el SENDER_MAIL_USER y SENDER_MAIL_PASS se enviara en el documento de la entrega.
 
 
 ### USERS:
