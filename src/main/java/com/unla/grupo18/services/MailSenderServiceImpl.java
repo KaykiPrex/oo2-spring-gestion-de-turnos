@@ -19,8 +19,8 @@ public class MailSenderServiceImpl implements IMailSenderService {
     @Override
     public void sendMail(MailSenderTitle mailSenderTitle , String mailTo, String displayName) throws MessagingException, UnsupportedEncodingException {
         switch (mailSenderTitle) {
-            case CANCEL_APPOINTMENT_MAIL_TO_CLIENT: cancelMailClient (mailTo, displayName);
-            case CANCEL_APPOINTMENT_MAIL_TO_PROFESSIONAL: cancelMailProfessional(mailTo, displayName);
+            case CANCEL_APPOINTMENT_MAIL_TO_CLIENT: cancelMailClient (mailTo, displayName) ; break ;
+            case CANCEL_APPOINTMENT_MAIL_TO_PROFESSIONAL: cancelMailProfessional(mailTo, displayName); break ;
         }
     }
 
