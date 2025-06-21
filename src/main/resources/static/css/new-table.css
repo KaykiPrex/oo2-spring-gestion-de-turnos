@@ -1,0 +1,28 @@
+body {
+    background-color: #f9f5f5;
+    font-family: Arial, sans-serif;
+    color: #4d3838;
+}
+
+h1 {
+    color: rosybrown;
+    border-bottom: 2px solid rosybrown;
+    padding-bottom: 0.3rem;
+    margin-bottom: 1.5rem;
+}
+
+.table {
+    background-color: #ffffff;
+    border: 1px solid rosybrown;
+    box-shadow: 0 0 10px rgba(188, 143, 143, 0.2);
+}
+
+.btn-secondary {
+    background-color: rosybrown;
+    border-color: rosybrown;
+}
+
+.btn-secondary:hover {
+    background-color: #b97a7a;
+    border-color: #b97a7a;
+}

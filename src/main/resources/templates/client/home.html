@@ -1,31 +1,41 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <script th:if="${mensaje}">
-        alert("[[${mensaje}]]");
-    </script>
     <title>Dashboard</title>
-    <link rel="stylesheet" th:href="@{/css/index.css}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/homeprofessional.css}">
 </head>
 <body>
 <header class="main-header">
-    <div class="company-name"><h2 class="nombre-empresa">Grupo 18</h2></div>
-    <nav>
-        <p><span th:text="${username}" style="font-size: 24px;padding-right: 20px;"></span></p>
-        <form th:action="@{/logout}" method="post">
-            <button type="submit">Cerrar sesion</button>
+    <h2 class="mb-0">Grupo 18</h2>
+    <nav class="d-flex align-items-center flex-wrap mt-2">
+        <a href="#turnos">Mis turnos</a>
+        <a href="#solicitar">Solicitar turno</a>
+
+        <p class="ms-3 mb-0">Bienvenido, <span th:text="${username}"></span></p>
+        <form th:action="@{/logout}" method="post" class="ms-3">
+            <button type="submit" class="btn btn-light btn-sm">Cerrar sesión</button>
         </form>
     </nav>
 </header>
-<div class="contenedor">
-    <div class="opciones">
-        <div th:onclick="|window.location.href='/users/clients/appointments'|" class="opcion celeste">Mis turnos</div>
-        <div th:onclick="|window.location.href='/users/clients/categories'|" class="opcion amarillo">Solicitar turno</div>
-    </div>
 
-</div>
+<main>
+    <section id="turnos" class="seccion-opcion celeste"
+             th:onclick="|window.location.href='/users/clients/appointments'|">
+        <div class="contenido-opcion">
+            <span class="titulo-opcion">Mis turnos</span>
+            <span class="descripcion-opcion">· Visualizá tus turnos agendados.</span>
+        </div>
+    </section>
+
+    <section id="solicitar" class="seccion-opcion amarillo"
+             th:onclick="|window.location.href='/users/clients/categories'|">
+        <div class="contenido-opcion">
+            <span class="titulo-opcion">Solicitar turno</span>
+            <span class="descripcion-opcion">· Agenda un nuevo turno personalizado.</span>
+        </div>
+    </section>
+</main>
 </body>
 </html>

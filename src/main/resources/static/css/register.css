@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins');
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f9f5f3;
+  margin: 0;
+  padding: 0;
+}
+
+.register-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: rosybrown;
+}
+
+.register-card {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 2rem;
+  max-width: 420px;
+  width: 100%;
+}
+
+.register-card .card-title {
+  color: rosybrown;
+}
+
+.form-control:focus {
+  border-color: rosybrown;
+  box-shadow: 0 0 0 0.2rem rgba(188, 143, 143, 0.25);
+}
+
+.btn-rosybrown {
+  background-color: rosybrown !important;
+  border-color: rosybrown !important;
+  color: #fff !important;
+}
+
+.btn-rosybrown:hover {
+  background-color: #b87c7c !important;
+  border-color: #b87c7c !important;
+}
