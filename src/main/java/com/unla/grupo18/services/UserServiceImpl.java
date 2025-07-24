@@ -10,6 +10,7 @@ import com.unla.grupo18.services.abstraction.IUserService;
 import com.unla.grupo18.services.mapper.UserMapper;
 import com.unla.grupo18.services.request.CreateUserRequest;
 import com.unla.grupo18.services.response.CreateUserResponse;
+import com.unla.grupo18.services.response.GetUserResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -64,8 +65,9 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public User findById(int id) {
-        return null;
+    public GetUserResponse findById(int id) {
+        User user = repository.findById(id).orElseThrow();
+        return UserMapper.toGetuserResponse(user);
     }
 
     @Override
