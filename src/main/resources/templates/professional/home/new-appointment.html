@@ -3,13 +3,17 @@
 <head>
   <title>Nuevo Turno</title>
   <link rel="stylesheet" th:href="@{/css/new-appointment.css}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 </head>
 <body>
 <h1>Crear Nuevo Turno</h1>
 <form th:action="@{/users/professionals/appointments/save}" th:object="${appointment}" method="post">
 
   <label>Fecha :</label>
-  <input type="date" th:field="*{date}" required /><br>
+  <input type="text" id="fechaDisponible" required /><br>
+  <!-- Campo oculto que enviará el ID al backend -->
+  <input type="hidden" name="appointmentDateId" id="fechaIdSeleccionada" />
+  <br>
   <label>Hora:</label>
   <input type="time" th:field="*{time}" required /><br>
   <label>Servicio:</label>
@@ -24,6 +28,36 @@
 
   <button type="submit">Generar Turno</button>
 </form>
+<div class="d-flex justify-content-start mt-3">
+  <button class="btn btn-secondary" onclick="window.location.href='/users/professionals/home'">Volver Atrás</button>
+</div>
 
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script th:inline="javascript">
+  const fechasMap = {
+    /*[# th:each="d : ${appointmentDates}"]*/
+      '/*[[${#temporals.format(d.date, "yyyy-MM-dd")}]]*/': /*[[${d.id}]]*/,
+    /*[/]*/
+  };
+
+  console.log("fechasMap generado:", fechasMap);
+  const fechasDisponibles = Object.keys(fechasMap);
+
+  flatpickr("#fechaDisponible", {
+    enable: fechasDisponibles,
+    dateFormat: "Y-m-d",
+    onChange: function(selectedDates, dateStr, instance) {
+      const clave = `/*"${dateStr}"*/`;
+      const id = fechasMap[clave];
+      document.getElementById("fechaIdSeleccionada").value = id ?? '';
+    }
+  });
+</script>
+<script>
+  document.getElementById("fechaDisponible").addEventListener("change", function() {
+    console.log("Fecha seleccionada:", this.value);
+    console.log("ID cargado:", document.getElementById("fechaIdSeleccionada").value);
+  });
+</script>
 </body>
 </html>

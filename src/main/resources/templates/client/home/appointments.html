@@ -20,7 +20,7 @@
         </thead>
         <tbody>
         <tr th:each="appointment : ${appointments}">
-            <td th:text="${appointment.date}"></td>
+            <td th:text="${appointment.appointmentDate != null ?appointment.appointmentDate.date : ''}"></td>
             <td th:text="${appointment.time}"></td>
             <td th:text="${appointment.professional.name}"></td>
             <td>
