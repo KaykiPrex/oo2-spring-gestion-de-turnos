@@ -1,8 +1,12 @@
 package com.unla.grupo18.controller;
 
 import com.unla.grupo18.model.Appointment;
+import com.unla.grupo18.model.AppointmentDate;
 import com.unla.grupo18.model.Client;
+import com.unla.grupo18.repositories.IAppointmentDateRepository;
+import com.unla.grupo18.repositories.IAppointmentRepository;
 import com.unla.grupo18.services.AppointmentServiceImpl;
+import com.unla.grupo18.services.abstraction.IAppointmentDateService;
 import com.unla.grupo18.services.abstraction.IAppointmentService;
 import com.unla.grupo18.services.abstraction.IProfessionalServiceService;
 import jakarta.servlet.http.HttpSession;
@@ -12,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -20,10 +25,12 @@ import java.util.List;
 public class UserProfessionalController {
     private final IAppointmentService appointmentService;
     private final IProfessionalServiceService professionalServiceService;
+    private final IAppointmentDateService appointmentDateRepository;
 
-    public UserProfessionalController(AppointmentServiceImpl appointmentService, IProfessionalServiceService professionalServiceService) {
+    public UserProfessionalController(AppointmentServiceImpl appointmentService, IProfessionalServiceService professionalServiceService, IAppointmentDateService appointmentDateRepository) {
         this.appointmentService = appointmentService;
         this.professionalServiceService = professionalServiceService;
+        this.appointmentDateRepository = appointmentDateRepository;
     }
 
     @GetMapping("/home")
@@ -61,6 +68,8 @@ public class UserProfessionalController {
         try {
             model.addAttribute("appointment", new Appointment());
             model.addAttribute("services", professionalServiceService.getServicesByProfessional(session));
+            List<AppointmentDate> appointmentDates = appointmentDateRepository.getAllAppointmentDate();
+            model.addAttribute("appointmentDates", appointmentDates);
             return "/professional/home/new-appointment";
         } catch (Exception e) {
             e.printStackTrace();
@@ -70,8 +79,10 @@ public class UserProfessionalController {
     }
 
     @PostMapping("/appointments/save")
-    public String saveAppointment(@ModelAttribute("appointment") Appointment appointment, Model model) {
+    public String saveAppointment(@ModelAttribute("appointment") Appointment appointment, @RequestParam("appointmentDateId") int dateId, Model model) {
         try {
+            AppointmentDate appointmentDate = appointmentDateRepository.getAppointmentDateById(dateId);
+            appointment.setAppointmentDate(appointmentDate);
             appointmentService.create(appointment);
             model.addAttribute("appointment", new Appointment());
             return "/professional/home/new-appointment";

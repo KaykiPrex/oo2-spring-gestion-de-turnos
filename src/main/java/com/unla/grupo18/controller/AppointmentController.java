@@ -27,7 +27,7 @@ public class AppointmentController {
 
     @Operation(summary = "Cancelador de turnos desde el cliente", description = "Cancela el turno desde la parte del cliente y se envia un mail", security = @SecurityRequirement(name = "basicAuth"))
     @PostMapping("{id}/clients/{clientid}")
-    public String deleteClient(@PathVariable int id, @PathVariable int clientid, RedirectAttributes redirectAttributes) throws MessagingException, UnsupportedEncodingException {
+    public String deleteClient(@PathVariable int id, RedirectAttributes redirectAttributes) throws MessagingException, UnsupportedEncodingException {
         service.cancelAppointmentForProfessionalByAppointmentId(id);
         redirectAttributes.addFlashAttribute("mensaje", "Se canceló el turno correctamente.");
         return "redirect:/users/clients/home";

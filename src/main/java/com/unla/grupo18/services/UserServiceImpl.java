@@ -37,7 +37,7 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public CreateUserResponse create(CreateUserRequest request) {
-        User user = repository.save(UserMapper.toModel(request));
+        User user = repository.save(UserMapper.toModel(request,passwordEncoder));
         return UserMapper.toResponse(user);
     }
 

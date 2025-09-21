@@ -14,7 +14,7 @@ import java.util.List;
 public interface IAppointmentRepository extends JpaRepository<Appointment, Integer> {
     List<Appointment> findByProfessionalId(int professionalId);
     List<Appointment> findByClientId(int clientId);
-    List<Appointment> findBydate(LocalDate date);
+    List<Appointment> findByAppointmentDate_date(LocalDate date);
     @Query("SELECT DISTINCT a.client FROM Appointment a WHERE a.professional.id = :professionalId AND a.client IS NOT NULL")
     List<Client> findDistinctClientsByProfessional(@Param("professionalId") int professionalId);
 

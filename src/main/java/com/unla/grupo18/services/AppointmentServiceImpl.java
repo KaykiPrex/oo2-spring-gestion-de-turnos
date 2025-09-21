@@ -38,7 +38,7 @@ public class AppointmentServiceImpl implements IAppointmentService {
 
     @Override
     public List<Appointment> getAppointmentsByToday(int professionalId) {
-        return appointmentRepository.findBydate(LocalDate.now());
+        return appointmentRepository.findByAppointmentDate_date(LocalDate.now());
     }
 
     @Override

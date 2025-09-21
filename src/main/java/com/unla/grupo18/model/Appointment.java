@@ -10,7 +10,7 @@ public class Appointment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private LocalDate date;
+    //private LocalDate date;
     private LocalTime time;
     @Column(name = "is_blocked")
     private boolean isBlocked;
@@ -25,13 +25,16 @@ public class Appointment {
     private ProfessionalService professionalService;
     @OneToOne(mappedBy = "appointment", cascade = CascadeType.ALL)
     private Report report;
+    @ManyToOne
+    @JoinColumn(name = "appointment_date")
+    private AppointmentDate appointmentDate;
 
     public Appointment() {
     }
 
-    public Appointment(int id, LocalDate date, LocalTime time, boolean isBlocked, Professional professional) {
+    public Appointment(int id, /*LocalDate date,*/ LocalTime time, boolean isBlocked, Professional professional) {
         this.id = id;
-        this.date = date;
+        //this.date = date;
         this.time = time;
         this.isBlocked = isBlocked;
         this.professional = professional;
@@ -45,13 +48,13 @@ public class Appointment {
         this.id = id;
     }
 
-    public LocalDate getDate() {
+    /*public LocalDate getDate() {
         return date;
     }
 
     public void setDate(LocalDate date) {
         this.date = date;
-    }
+    }*/
 
     public LocalTime getTime() {
         return time;
@@ -99,6 +102,14 @@ public class Appointment {
 
     public void setReport(Report report) {
         this.report = report;
+    }
+
+    public AppointmentDate getAppointmentDate() {
+        return appointmentDate;
+    }
+
+    public void setAppointmentDate(AppointmentDate appointmentDate) {
+        this.appointmentDate = appointmentDate;
     }
 
     public void deleteClient() {
