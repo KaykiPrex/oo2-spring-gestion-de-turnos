@@ -1,4 +1,6 @@
 package com.unla.grupo18.services.request;
 
-public record CreateUserContactRequest(String workEmail, String personalEmail, String phone, String mobile) {
+import jakarta.validation.constraints.Email;
+
+public record CreateUserContactRequest(@Email String workEmail,@Email String personalEmail, String phone, String mobile) {
 }

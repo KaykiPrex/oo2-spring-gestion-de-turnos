@@ -1,4 +1,6 @@
 package com.unla.grupo18.services.request;
 
-public record CreateUserRequest(String name , String pass , CreateUserContactRequest contact) {
+import jakarta.validation.constraints.NotBlank;
+
+public record CreateUserRequest(@NotBlank String name , @NotBlank String pass , CreateUserContactRequest contact) {
 }
