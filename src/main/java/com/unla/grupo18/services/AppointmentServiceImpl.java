@@ -1,5 +1,6 @@
 package com.unla.grupo18.services;
 
+import com.unla.grupo18.infrastructure.exception.EntityNotFoundException;
 import com.unla.grupo18.infrastructure.notification.MailSenderTitle;
 import com.unla.grupo18.model.Appointment;
 import com.unla.grupo18.model.Client;
@@ -8,6 +9,8 @@ import com.unla.grupo18.repositories.IAppointmentRepository;
 import com.unla.grupo18.repositories.IClientRepository;
 import com.unla.grupo18.services.abstraction.IAppointmentService;
 import com.unla.grupo18.services.abstraction.IMailSenderService;
+import com.unla.grupo18.services.response.GetAppointmentResponse;
+import com.unla.grupo18.services.response.ProfessionalResponse;
 import jakarta.mail.MessagingException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -35,7 +38,11 @@ public class AppointmentServiceImpl implements IAppointmentService {
     public List<Appointment> getAppointmentsByProfessional(int professionalId) {
         return appointmentRepository.findByProfessionalId(professionalId);
     }
-
+    public GetAppointmentResponse getAppointmentById(int id) {
+        Appointment appointment = appointmentRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Appointment no encontrado con ID: " + id));
+        return new GetAppointmentResponse(appointment.getId(), appointment.getTime(), appointment.isBlocked(),new ProfessionalResponse(appointment.getProfessional().getName(),appointment.getProfessional().getLastName(), appointment.getProfessional().getCuil() ) );
+    }
     @Override
     public List<Appointment> getAppointmentsByToday(int professionalId) {
         return appointmentRepository.findByAppointmentDate_date(LocalDate.now());

@@ -2,6 +2,7 @@ package com.unla.grupo18.services.abstraction;
 
 import com.unla.grupo18.model.Appointment;
 import com.unla.grupo18.model.Client;
+import com.unla.grupo18.services.response.GetAppointmentResponse;
 import jakarta.mail.MessagingException;
 
 import java.io.UnsupportedEncodingException;
@@ -23,4 +24,6 @@ public interface IAppointmentService {
     void assignClientToAppointment(Integer id);
 
     void create(Appointment appointment);
+
+    GetAppointmentResponse getAppointmentById(int id);
 }
