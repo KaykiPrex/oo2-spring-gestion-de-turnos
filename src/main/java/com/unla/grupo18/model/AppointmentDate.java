@@ -25,6 +25,15 @@ public class AppointmentDate {
         this.notes = notes;
     }
 
+    public AppointmentDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public AppointmentDate(LocalDate date, String notes) {
+        this.date = date;
+        this.notes = notes;
+    }
+
     public int getId() {
         return id;
     }
